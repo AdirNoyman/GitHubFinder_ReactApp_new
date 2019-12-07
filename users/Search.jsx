@@ -2,9 +2,11 @@ import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import GithubContext from '../../context/github/githubContext';
 
+
 const Search = ({ setAlert, clearUsers, showClearButton }) => {
 
-    const githubContext = useContext(GithubContext);
+
+    const { searchUsers } = useContext(GithubContext);
 
     const [text, setText] = useState('');
 
@@ -20,7 +22,7 @@ const Search = ({ setAlert, clearUsers, showClearButton }) => {
 
         } else {
 
-            githubContext.searchUsers(text);
+            searchUsers(text);
             setText('');
 
         }

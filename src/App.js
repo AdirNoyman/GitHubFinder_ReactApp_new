@@ -12,28 +12,10 @@ import User from './components/users/User';
 
 const App = () => {
 
-  const [users, setUsers] = useState([]);
-  const [user, setUser] = useState({});
   const [repos, setRepos] = useState([]);
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(null);
 
-  // Search github users
-
-
-  // Get a single GitHub user
-  const getUser = async username => {
-
-    setLoading(true);
-
-    const res = await Axios.get(`https://api.github.com/users/${username}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
-
-    const data = res.data;
-
-    setUser(data);
-    setLoading(false);
-
-  };
 
   // Get users repos
   const getUserRepos = async username => {
@@ -48,13 +30,6 @@ const App = () => {
     setLoading(false);
   };
 
-  // Clear screen from search results
-
-  const handelClearUsers = () => {
-
-    setUsers([]);
-    setLoading(false);
-  };
 
   const handelEmptySearch = (message, type) => {
 
@@ -76,17 +51,15 @@ const App = () => {
               <Route exact path='/' render={props => (
                 <Fragment>
                   <Search
-                    clearUsers={handelClearUsers}
-                    showClearButton={users.length > 0}
                     setAlert={handelEmptySearch} />
-                  <Users loading={loading} users={users} />
+                  <Users />
                 </Fragment>
 
               )} />
               <Route exact path='/about' component={About} />
               <Route exact path='/user/:login' render={props => (
 
-                <User {...props} getUser={getUser} getUserRepos={getUserRepos} repos={repos} user={user} loading={loading} />
+                <User {...props} getUserRepos={getUserRepos} repos={repos} />
 
               )} />
             </Switch>
